@@ -2,7 +2,7 @@
 
 A SteamVR dashboard and tracker driver for VIVE Ultimate Trackers on Steam Frame ARM64.
 
-**Room Setup not functional yet, Must use a PC to set up a Tracking Map!!!**.
+##Room Setup not functional yet, Must use a PC to set up a Tracking Map!!!.
 
 ## Installation (prerelease)
 
