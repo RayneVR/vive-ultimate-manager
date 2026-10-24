@@ -1,6 +1,8 @@
 # VIVE Ultimate Manager — Steam Frame ARM64 (pre-release)
 
-SteamVR driver and dashboard source, including **disabled Room setup / In progress on hover**.
+SteamVR driver and dashboard source.
+
+**Room Setup not functional yet, Must use a PC to set up a Tracking Map!!!**.
 
 ## Installation
 
