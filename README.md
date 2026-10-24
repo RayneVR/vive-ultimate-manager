@@ -9,7 +9,7 @@ This repository includes the original dashboard and custom driver sources and St
 Requirements: Steam Frame ARM64, SteamVR installed at `/opt/steamvr`, VIVE SDK headers at `~/vive-ultimate-tracker-sdk/include/ultimate_tracker.h`, authorized `libultimate-tracker.so` at `~/vive-ultimate/lib/`, and C++/pkg-config/EGL/GLESv2/GBM/FreeType development dependencies.
 
 ```bash
-git clone https://github.com/YOUR-USERNAME/vive-ultimate-manager.git
+git clone https://github.com/RayneVR/vive-ultimate-manager.git
 cd vive-ultimate-manager
 bash install.sh
 ```
