@@ -1,0 +1,6 @@
+vive-ultimate-dashboard
+*.o
+*.so
+*.CURRENT
+*.backup*
+.DS_Store
