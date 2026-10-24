@@ -116,8 +116,7 @@ g++ -std=c++17 -O2 -fPIC -shared -Wall -Wextra \
 
 log 'Checking driver dependencies'
 
-if ldd "$DRIVER/bin/linuxarm64/driver_vive_ultimate.so" |
-   grep -q 'not found'; then
+if ldd "$DRIVER/bin/linuxarm64/driver_vive_ultimate.so" | grep 'not found'; then
   die 'Driver has unresolved shared-library dependencies.'
 fi
 
