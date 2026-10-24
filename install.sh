@@ -11,10 +11,23 @@ die(){ printf 'ERROR: %s\n' "$*" >&2; exit 1; }
 [[ -f "$STEAMVR/bin/linuxarm64/libopenvr_api.so" ]] || die "SteamVR ARM64 not found at $STEAMVR. Set STEAMVR_DIR."
 [[ -f "$STEAMVR/tools/hellovr_vulkan_linux/src/openvr/headers/openvr.h" ]] || die 'SteamVR OpenVR headers missing.'
 [[ -f "$STEAMVR/tools/hellovr_vulkan_linux/src/openvr/headers/openvr_driver.h" ]] || die 'SteamVR driver header missing.'
-[[ -f "$SDK/include/ultimate_tracker.h" ]] || die "Authorized VIVE SDK headers required at $SDK/include. Set VIVE_SDK_DIR."
-[[ -f "$SDK/LICENSE" || -f "$SDK/README.md" ]] || echo 'Note: verify your SDK licensing before distributing.'
-LIB="${VIVE_TRACKER_LIB:-$DRIVER/lib/libultimate-tracker.so}"
-[[ -f "$LIB" ]] || die 'Proprietary libultimate-tracker.so is missing. Supply an authorized copy via VIVE_TRACKER_LIB=/path/to/libultimate-tracker.so.'
+# Obtain HTC's public Linux SDK directly from its official GitHub repository.
+# The SDK is not included in this project's Git repository.
+SDK_REPO="https://github.com/ViveRoboticsSoftware/vive-ultimate-tracker-sdk.git"
+if [[ ! -f "$SDK/include/ultimate_tracker.h" || ! -f "$SDK/bin/linux/arm64/libultimate-tracker.so" ]]; then
+  command -v git >/dev/null || die 'git is required to download the official HTC SDK.'
+  if [[ -e "$SDK" ]]; then
+    die "SDK directory exists but is incomplete: $SDK. Move it aside or set VIVE_SDK_DIR to a new directory."
+  fi
+  log 'Downloading official HTC VIVE Ultimate Tracker Linux SDK'
+  git clone --depth 1 "$SDK_REPO" "$SDK" || die 'HTC SDK download failed. Check network access and the upstream repository.'
+fi
+[[ -f "$SDK/include/ultimate_tracker.h" ]] || die 'HTC SDK header missing after download.'
+SDK_LIB="$SDK/bin/linux/arm64/libultimate-tracker.so"
+[[ -f "$SDK_LIB" ]] || die 'HTC SDK ARM64 runtime missing after download.'
+LIB="${VIVE_TRACKER_LIB:-$SDK_LIB}"
+[[ -f "$LIB" ]] || die "Tracker runtime not found: $LIB"
+log 'Using HTC SDK downloaded from its official repository (subject to HTC license terms)'
 for tool in g++ pkg-config cp mkdir; do command -v "$tool" >/dev/null || die "Missing build tool: $tool"; done
 pkg-config --exists egl glesv2 gbm freetype2 || die 'Missing EGL/GLESv2/GBM/FreeType development packages. Install with your SteamOS package manager.'
 log 'Backing up existing installations'

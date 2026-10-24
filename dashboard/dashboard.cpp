@@ -8,6 +8,7 @@
 #include FT_FREETYPE_H
 #include <fcntl.h>
 #include <unistd.h>
+#include <sys/wait.h>
 
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -523,6 +524,27 @@ void drawActionButton(int index,int x,int w){
     rect(x+12,796,w-24,3,0xFF73BDF2u);
 }
 
+// Clickable GitHub watermark, drawn on both dashboard tabs.
+constexpr int GITHUB_X0=766, GITHUB_Y0=867, GITHUB_X1=985, GITHUB_Y1=899;
+void drawGithubWatermark() {
+  // The overlay uses 1024x900 pixel coordinates.
+  smoothText(781,889,"RayneVR  -  GitHub",MUTED,16);
+  rect(781,894,174,1,MUTED);
+}
+void openGithubProfile() {
+  // Open the real profile, not a placeholder repository URL.
+  // xdg-open may be unavailable in SteamVR's environment; fail without
+  // interrupting tracker controls.
+  pid_t pid=fork();
+  if(pid==0) {
+    execlp("xdg-open","xdg-open","https://github.com/RayneVR",(char*)nullptr);
+    _exit(127);
+  }
+  if(pid>0) {
+    std::thread([pid](){ int status=0; waitpid(pid,&status,0); }).detach();
+  }
+}
+
 void render() {
   std::fill(px.begin(),px.end(),BG);
 
@@ -542,7 +564,7 @@ void render() {
   smoothText(947,72,"X",WHITE,28);
 
   drawTabs();
-  if(activeTab==1){renderOSC();dirty=false;return;}
+  if(activeTab==1){renderOSC();drawGithubWatermark();dirty=false;return;}
   // Tracker activity is observable; dongle USB status is not exposed by this SDK.
   size_t ready=0;
   bool haveTrackerData=false;
@@ -662,6 +684,7 @@ void render() {
     }
   }
 
+  drawGithubWatermark();
   dirty=false;
 }
 void say(std::string s,uint32_t c=MUTED){banner=std::move(s);bannerColor=c;dirty=true;}
@@ -701,6 +724,10 @@ void command(Client&c,const char*s){
   else say(std::string("FAILED TO SEND: ")+s,RED);
 }
 void click(Client&c,float x,float y){
+  if(x>=GITHUB_X0 && x<GITHUB_X1 && y>=GITHUB_Y0 && y<GITHUB_Y1) {
+    openGithubProfile();
+    return;
+  }
   if(y>=135&&y<177){
     if(x>=40&&x<230){activeTab=0;dirty=true;return;}
     if(x>=244&&x<434){activeTab=1;dirty=true;return;}
