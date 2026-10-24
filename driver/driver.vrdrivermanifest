@@ -1,0 +1,10 @@
+{
+  "alwaysActivate": true,
+  "name": "vive_ultimate",
+  "directory": "",
+  "resourceOnly": false,
+  "hmd_presence": [],
+  "interfaces": {
+    "IServerTrackedDeviceProvider_004": "{driver}/bin/linuxarm64/driver_vive_ultimate.so"
+  }
+}

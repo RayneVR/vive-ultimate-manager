@@ -1,19 +1,12 @@
-# VIVE Ultimate Manager — Steam Frame
+# VIVE Ultimate Manager — Steam Frame ARM64 (pre-release)
 
-Community SteamVR dashboard UI for VIVE Ultimate Trackers on Steam Frame (ARM64 Linux).
+SteamVR driver and dashboard source, including **disabled Room setup / In progress on hover**.
 
-## Features
-- Live tracker connection and pose status (full pose, rotation only, tracking lost)
-- Tracker dropdown with Echo / power-off commands
-- OSC configuration
-- Pair/unpair and service warnings
-- Room setup placeholder (shows “In progress” on hover)
+## Installation
 
-## Install / update on an already-working Steam Frame
+This repository includes the original dashboard and custom driver sources and SteamVR resources. **It does not redistribute HTC proprietary SDK or `libultimate-tracker.so`.** You must obtain these from an authorized source and have them on the Frame.
 
-**Prerequisites:** This package currently requires a working tracker driver, VIVE SDK, SteamVR runtime, and `~/vive-ultimate-dashboard/build.sh`. It **does not** install the underlying driver, SDK, SteamVR, or system packages. It is not yet a fresh-device one-click installer.
-
-After publishing this repository on GitHub:
+Requirements: Steam Frame ARM64, SteamVR installed at `/opt/steamvr`, VIVE SDK headers at `~/vive-ultimate-tracker-sdk/include/ultimate_tracker.h`, authorized `libultimate-tracker.so` at `~/vive-ultimate/lib/`, and C++/pkg-config/EGL/GLESv2/GBM/FreeType development dependencies.
 
 ```bash
 git clone https://github.com/YOUR-USERNAME/vive-ultimate-manager.git
@@ -21,38 +14,14 @@ cd vive-ultimate-manager
 bash install.sh
 ```
 
-Or download and extract the GitHub repository ZIP and run `bash install.sh` from the extracted folder.
-
-### What the installer does
-1. Checks required files and tools.
-2. Backs up the current source and binary to `~/vive-ultimate-dashboard/backups/`.
-3. Copies the dashboard source into the existing project.
-4. Runs the **existing known-working** `build.sh`.
-5. Restores the previous source/binary if compilation fails.
-6. Saves `.CURRENT` copies after a successful build.
-
-Launch with SteamVR active:
+For a different authorized SDK/library location:
 
 ```bash
-~/vive-ultimate-dashboard/vive-ultimate-dashboard
+VIVE_SDK_DIR=/path/to/sdk VIVE_TRACKER_LIB=/path/to/libultimate-tracker.so bash install.sh
 ```
 
-## Uninstall UI
+The installer checks prerequisites, backs up previous source/binaries, compiles the driver and UI, and attempts driver registration using `vrpathreg`. Restart SteamVR afterward. This is **not yet a verified fresh-install solution**: the proprietary runtime must be supplied, and automatic dashboard startup is not yet configured. Test on a spare device before publishing as a stable release.
 
-```bash
-bash uninstall-ui.sh
-```
+## License and redistribution
 
-This removes only the dashboard project; it does not remove SteamVR, VIVE driver, or SDK. **Back up your personal changes first.**
-
-## Before a public release
-- Verify ownership and redistribution rights for dashboard source and dependencies.
-- Obtain permission or a documented distribution route for any proprietary SDK or driver assets.
-- Add a fresh-install driver/SDK workflow, service registration, and SteamVR auto-start integration after testing on a clean Frame.
-- Test installer on Steam Frame ARM64; this package has not been compiled or run on a Frame by the packager.
-
-## Known limitations
-- The Echo command is not guaranteed to physically identify a tracker.
-- Room setup is not yet implemented.
-- The tracking-lost timeout is heuristic.
-- The dashboard includes an existing absolute icon path (`/home/steamos/vive-ultimate/resources/icons/tracker_status_off@2x.png`), so icons may be missing on other installations.
+The supplied source and resources originate from the user's Frame backup. Verify authorship and licenses of the driver, resources, and any third-party code before publishing. Do not publish proprietary HTC SDK binaries without redistribution permission.

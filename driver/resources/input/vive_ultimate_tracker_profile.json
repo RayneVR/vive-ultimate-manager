@@ -1,0 +1,58 @@
+{
+  "jsonid" : "input_profile",
+  "controller_type": "vive_ultimate_tracker",
+  "input_bindingui_mode" : "single_device",
+  "priority": 5,
+  "tracker_types" :
+  {
+  	"TrackerRole_Handed" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_handed_profile.json",
+  	"TrackerRole_LeftFoot" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_foot_profile.json",
+  	"TrackerRole_RightFoot" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_foot_profile.json",
+  	"TrackerRole_LeftShoulder" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_shoulder_profile.json",
+  	"TrackerRole_RightShoulder" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_shoulder_profile.json",
+  	"TrackerRole_LeftElbow" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_elbow_profile.json",
+  	"TrackerRole_RightElbow" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_elbow_profile.json",
+  	"TrackerRole_LeftKnee" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_knee_profile.json",
+  	"TrackerRole_RightKnee" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_knee_profile.json",
+  	"TrackerRole_LeftWrist" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_wrist_profile.json",
+  	"TrackerRole_RightWrist" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_wrist_profile.json",
+  	"TrackerRole_LeftAnkle" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_left_ankle_profile.json",
+  	"TrackerRole_RightAnkle" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_right_ankle_profile.json",
+  	"TrackerRole_Waist" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_waist_profile.json",
+  	"TrackerRole_Chest" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_chest_profile.json",
+  	"TrackerRole_Camera" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_camera_profile.json",
+  	"TrackerRole_Keyboard" : "{vive_ultimate_tracker}/input/tracker/vive_tracker_keyboard_profile.json"
+  },
+  "input_source" :
+  {
+	"/input/power" : {
+        "type" : "button",
+		"order" :  1,
+        "binding_image_point" : [ 100, 90 ]
+    },
+	"/input/grip" : {
+        "type" : "button",
+		"order" :  2,
+        "binding_image_point" : [ 100, 90 ]
+    },
+	"/input/trigger" : {
+        "type" : "button",
+		"order" :  3,
+        "binding_image_point" : [ 100, 90 ]
+    },
+	"/input/thumb" : {
+        "type" : "button",
+		"order" :  4,
+        "binding_image_point" : [ 100, 90 ]
+    },
+	"/input/application_menu" : {
+        "type" : "button",
+		"order" :  5,
+        "binding_image_point" : [ 100, 90 ]
+    },
+    "/pose/raw" : {
+        "type" : "pose",
+        "binding_image_point" : [ 63, 148 ]
+    }
+  }
+}
